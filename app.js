@@ -28,6 +28,7 @@ app.get('/api/temperaturas', async (req, res) => {
         const temperaturas = await Temperatura.find();
         res.json(temperaturas);
     } catch (err) {
+        console.error('Error al obtener temperaturas:', err); // <--- Agrega esto
         res.status(500).json({ error: 'Error al obtener temperaturas' });
     }
 });
