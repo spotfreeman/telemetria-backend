@@ -8,7 +8,7 @@ const app = express();
 
 // Configuración de CORS
 app.use(cors({
-    origin: 'https://proyecto-5-backend-eeei.onrender.com', // Cambia esto si tu frontend está en otra URL
+    origin: 'https://telemetria-backend.onrender.com', // Cambia esto si tu frontend está en otra URL
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization']
 }));
