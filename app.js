@@ -8,7 +8,7 @@ const app = express();
 
 // Configuración de CORS
 app.use(cors({
-    origin: 'http://192.168.1.85:3001', // Cambia esto si tu frontend está en otra URL
+    origin: 'https://api.render.com/deploy/srv-d0p7a9emcj7s73drlvmg?key=Q6BdVf6HEmg', // Cambia esto si tu frontend está en otra URL
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization']
 }));
