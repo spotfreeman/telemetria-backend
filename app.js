@@ -8,7 +8,7 @@ const app = express();
 
 // Configuración de CORS
 app.use(cors({
-    origin: 'https://telemetria-backend.onrender.com', // Cambia esto si tu frontend está en otra URL
+    origin: 'https://telemetria-frontend.onrender.com', // Cambia esto si tu frontend está en otra URL
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization']
 }));
@@ -26,6 +26,7 @@ app.get('/api/temperaturas', async (req, res) => {
         res.status(500).json({ error: 'Error al obtener temperaturas' });
     }
 });
+
 
 mongoose.connect(process.env.MONGODB_URI, {
     useNewUrlParser: true,
