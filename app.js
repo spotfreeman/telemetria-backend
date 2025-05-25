@@ -13,12 +13,6 @@ app.use(cors({
     allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
-mongoose.connect(process.env.MONGODB_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-})
-    .then(() => console.log('Conectado a MongoDB'))
-    .catch(err => console.error('Error de conexión:', err));
 
 app.use(express.json());
 
@@ -32,6 +26,13 @@ app.get('/api/temperaturas', async (req, res) => {
         res.status(500).json({ error: 'Error al obtener temperaturas' });
     }
 });
+
+mongoose.connect(process.env.MONGODB_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+})
+    .then(() => console.log('Conectado a MongoDB'))
+    .catch(err => console.error('Error de conexión:', err));
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
