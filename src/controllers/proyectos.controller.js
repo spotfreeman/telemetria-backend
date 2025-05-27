@@ -57,11 +57,3 @@ exports.delete = async (req, res) => {
         res.status(500).json({ error: 'Error al eliminar el proyecto' });
     }
 }
-// Exportar el controlador
-module.exports = {
-    getAll,
-    getById,
-    create,
-    update,
-    delete: deleteProyecto
-};
