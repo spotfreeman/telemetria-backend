@@ -4,7 +4,8 @@ const cors = require('cors');
 // Importar las rutas de temperatura, rpi y notas
 const temperaturaRoutes = require('./routes/temperatura.routes');
 const rpiRoutes = require('./routes/rpi.routes');
-const notas = require('./routes/nota.routes'); // Importar las rutas de notas
+const notas = require('./routes/nota.routes');
+const proyectos = require('./routes/proyecto.routes');
 
 const app = express();
 
@@ -20,5 +21,6 @@ app.use(express.json());
 app.use('/api/temperaturas', temperaturaRoutes);
 app.use('/api/rpis', rpiRoutes);
 app.use('/api/notas', notas);
+app.use('/api/proyectos', proyectos);
 
 module.exports = app;
