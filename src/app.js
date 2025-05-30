@@ -6,6 +6,9 @@ const temperaturaRoutes = require('./routes/temperatura.routes');
 const rpiRoutes = require('./routes/rpi.routes');
 const notas = require('./routes/nota.routes'); // Importar las rutas de notas
 
+// Importa y usa las rutas de autenticación
+const authRoutes = require('./src/routes/auth.routes');
+
 const app = express();
 
 app.use(cors({
@@ -20,5 +23,6 @@ app.use(express.json());
 app.use('/api/temperaturas', temperaturaRoutes);
 app.use('/api/rpis', rpiRoutes);
 app.use('/api/notas', notas);
+app.use('/api/auth', authRoutes);
 
 module.exports = app;
