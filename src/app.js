@@ -10,7 +10,7 @@ const proyectos = require('./routes/proyectos.routes');
 const app = express();
 
 app.use(cors({
-    origin: 'https://telemetria-frontend.onrender.com',
+    origin: ['https://telemetria-frontend.onrender.com', 'https://chat.openai.com'],
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization']
 }));
