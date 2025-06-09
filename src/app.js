@@ -6,8 +6,8 @@ const temperaturaRoutes = require('./routes/temperatura.routes');
 const rpiRoutes = require('./routes/rpi.routes');
 const notas = require('./routes/nota.routes');
 const proyectos = require('./routes/proyectos.routes');
-
 const usuarioRoutes = require('./routes/usuario.routes');
+
 
 
 const app = express();
