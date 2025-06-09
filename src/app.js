@@ -7,6 +7,9 @@ const rpiRoutes = require('./routes/rpi.routes');
 const notas = require('./routes/nota.routes');
 const proyectos = require('./routes/proyectos.routes');
 
+const usuarioRoutes = require('./routes/usuario.routes');
+
+
 const app = express();
 
 //app.use(cors());
@@ -24,5 +27,6 @@ app.use('/api/temperaturas', temperaturaRoutes);
 app.use('/api/rpis', rpiRoutes);
 app.use('/api/notas', notas);
 app.use('/api/proyectos', proyectos);
+app.use('/api/usuarios', usuarioRoutes);
 
 module.exports = app;
