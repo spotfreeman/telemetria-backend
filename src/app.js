@@ -8,8 +8,6 @@ const notas = require('./routes/nota.routes');
 const proyectos = require('./routes/proyectos.routes');
 const usuarioRoutes = require('./routes/usuario.routes');
 
-
-
 const app = express();
 
 //app.use(cors());

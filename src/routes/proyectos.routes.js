@@ -3,7 +3,7 @@ const router = express.Router();
 const proyectoController = require('../controllers/proyectos.controller');
 const auth = require('../middleware/auth');
 
-
+router.use(auth); // Middleware de autenticación para todas las rutas
 
 // Ruta para obtener todos los proyectos
 router.get('/', proyectoController.getAll);
