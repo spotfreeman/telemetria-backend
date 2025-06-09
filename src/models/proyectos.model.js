@@ -11,9 +11,9 @@ const proyectoSchema = new mongoose.Schema({
         descripcion: { type: String }
     }],
     avance: [{
-        fecha_hora: { type: Date },
-        porcentaje: { type: Number },
-        descripcion: { type: String }
+        mes: { type: Number },
+        anio: { type: Number },
+        valor: { type: Number }
     }],
 
 
