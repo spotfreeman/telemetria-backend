@@ -6,15 +6,24 @@ const proyectoSchema = new mongoose.Schema({
     descripcion: { type: String },
     estado: { type: String },
     pagos: [{
-        fecha_hora: { type: Date },
+        mes: { type: Number },
         monto: { type: Number },
-        descripcion: { type: String }
+        valor: { type: Number }
     }],
     avance: [{
         mes: { type: Number },
         anio: { type: Number },
         valor: { type: Number }
     }],
+    programado: [{
+        mes: { type: Number },
+        anio: { type: Number },
+        valor: { type: Number }
+    }],
+    georeferencia: {
+        latitud: { type: Number },
+        longitud: { type: Number }
+    },
 
 
 
