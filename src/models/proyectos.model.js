@@ -24,6 +24,11 @@ const proyectoSchema = new mongoose.Schema({
         latitud: { type: Number },
         longitud: { type: Number }
     },
+    detalledelmes: [{
+        mes: { type: Number },
+        anio: { type: Number },
+        descripcion: { type: String }
+    }],
 
 
 
