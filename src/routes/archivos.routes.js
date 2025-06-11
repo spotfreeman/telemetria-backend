@@ -7,14 +7,14 @@ const auth = require('../middleware/auth');
 router.use(auth);
 
 // Ruta para obtener todos los archivos
-router.get('/', archivosController.getAll);
+router.get('/', auth, archivosController.getAll);
 // Ruta para obtener un archivo por ID
-router.get('/:id', archivosController.getById);
+router.get('/:id', auth, archivosController.getById);
 // Ruta para crear un nuevo archivo
-router.post('/', archivosController.create);
+router.post('/', auth, archivosController.create);
 // Ruta para actualizar un archivo por ID
-router.put('/:id', archivosController.update);
+router.put('/:id', auth, archivosController.update);
 // Ruta para eliminar un archivo por ID
-router.delete('/:id', archivosController.delete);
+router.delete('/:id', auth, archivosController.delete);
 // Exportar el router
 module.exports = router;
