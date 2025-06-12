@@ -8,6 +8,7 @@ const notas = require('./routes/nota.routes');
 const proyectos = require('./routes/proyectos.routes');
 const usuarioRoutes = require('./routes/usuario.routes');
 const archivosRoutes = require('./routes/archivos.routes');
+const vacacionesRoutes = require('./routes/vacaciones.routes');
 
 const app = express();
 
@@ -28,5 +29,6 @@ app.use('/api/notas', notas);
 app.use('/api/proyectos', proyectos);
 app.use('/api/usuarios', usuarioRoutes);
 app.use('/api/archivos', archivosRoutes);
+app.use('/api/vacaciones', vacacionesRoutes)
 
 module.exports = app;
