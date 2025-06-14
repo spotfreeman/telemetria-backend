@@ -1,5 +1,4 @@
 const User = require('../models/unity.model');
-const bcrypt = require('bcrypt');
 
 exports.post = async (req, res) => {
     try {
@@ -11,9 +10,8 @@ exports.post = async (req, res) => {
             return res.status(400).json({ error: 'Usuario no encontrado' });
         }
 
-        // Comparar contraseña (usa bcrypt si está hasheada)
-        const valido = await bcrypt.compare(password, user.password);
-        if (!valido) {
+        // Comparar contraseña en texto plano (solo para pruebas)
+        if (user.password !== password) {
             return res.status(400).json({ error: 'Contraseña incorrecta' });
         }
 
