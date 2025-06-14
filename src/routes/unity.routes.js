@@ -7,9 +7,9 @@ const auth = require('../middleware/auth');
 // router.use(auth);
 
 // Ruta para obtener todas las unidades
-router.get('/', auth, unityController.getAll);
+router.get('/', unityController.getAll);
 // Ruta para obtener una unidad por ID
-router.get('/:id', auth, unityController.getById);
+router.get('/', unityController.getById);
 // Ruta para crear una nueva unidad
 router.post('/', unityController.create);
 // Ruta para actualizar una unidad por ID
