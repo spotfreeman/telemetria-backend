@@ -34,6 +34,9 @@ app.use('/api/proyectos', proyectos);
 app.use('/api/usuarios', usuarioRoutes);
 app.use('/api/archivos', archivosRoutes);
 app.use('/api/vacaciones', vacacionesRoutes)
-app.use('/api/unity', unityRoutes);
+
+// Test Unity MongoDB
+app.post('/api/unity', unityRoutes);
+
 
 module.exports = app;
