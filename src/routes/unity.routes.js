@@ -13,7 +13,7 @@ const auth = require('../middleware/auth');
 //router.get('/', unityController.getById);
 
 // Ruta para crear una nueva unidad
-router.post('/', unityController.post);
+router.post('/unity', unityController.post);
 
 // Ruta para actualizar una unidad por ID
 //router.put('/:id', auth, unityController.update);
