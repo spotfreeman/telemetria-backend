@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const unityController = require('../controllers/unity.controller');
-const auth = require('../middleware/auth');
+
 
 // Middleware de autenticación para todas las rutas
 // router.use(auth);
@@ -13,7 +13,7 @@ const auth = require('../middleware/auth');
 //router.get('/', unityController.getById);
 
 // Ruta para crear una nueva unidad
-router.post('/unity', unityController.post);
+router.post('/', unityController.post);
 
 // Ruta para actualizar una unidad por ID
 //router.put('/:id', auth, unityController.update);

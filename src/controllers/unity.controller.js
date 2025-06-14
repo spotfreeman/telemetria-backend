@@ -17,5 +17,3 @@ exports.post = async (req, res) => {
     // Login exitoso
     return res.json({ message: 'Login exitoso', username: user.username });
 }
-
-
