@@ -32,7 +32,7 @@ exports.post = async (req, res) => {
     }
 };
 
-app.post('/api/unity/update', async (req, res) => {
+exports.post = async (req, res) => {
     const { username, level, coins } = req.body;
     const user = await User.findOneAndUpdate(
         { username },
