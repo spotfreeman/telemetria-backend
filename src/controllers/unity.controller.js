@@ -32,13 +32,19 @@ exports.post = async (req, res) => {
     }
 };
 
-exports.post = async (req, res) => {
-    const { username, level, coins } = req.body;
-    const user = await User.findOneAndUpdate(
-        { username },
-        { level, coins },
-        { new: true }
-    );
-    if (!user) return res.status(400).json({ error: 'Usuario no encontrado' });
-    res.json({ message: 'Datos actualizados', user });
-});
+// Actualizar datos de usuario
+exports.update = async (req, res) => {
+    try {
+        const { username, level, coins } = req.body;
+        const user = await User.findOneAndUpdate(
+            { username },
+            { level, coins },
+            { new: true }
+        );
+        if (!user) return res.status(400).json({ error: 'Usuario no encontrado' });
+        res.json({ message: 'Datos actualizados', user });
+    } catch (err) {
+        console.error('Error al actualizar usuario:', err);
+        res.status(500).json({ error: 'Error al actualizar usuario' });
+    }
+};
