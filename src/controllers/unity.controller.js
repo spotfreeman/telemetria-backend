@@ -31,3 +31,14 @@ exports.post = async (req, res) => {
         res.status(500).json({ error: 'Error al crear la unidad' });
     }
 };
+
+app.post('/api/unity/update', async (req, res) => {
+    const { username, level, coins } = req.body;
+    const user = await User.findOneAndUpdate(
+        { username },
+        { level, coins },
+        { new: true }
+    );
+    if (!user) return res.status(400).json({ error: 'Usuario no encontrado' });
+    res.json({ message: 'Datos actualizados', user });
+});

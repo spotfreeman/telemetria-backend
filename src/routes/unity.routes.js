@@ -14,6 +14,7 @@ const unityController = require('../controllers/unity.controller');
 
 // Ruta para crear una nueva unidad
 router.post('/', unityController.post);
+router.post('/update', unityController.update);
 
 // Ruta para actualizar una unidad por ID
 //router.put('/:id', auth, unityController.update);
