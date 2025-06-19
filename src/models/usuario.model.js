@@ -8,7 +8,8 @@ const usuarioSchema = new mongoose.Schema({
     apellido: { type: String },
     fechaCreacion: { type: Date, default: Date.now },
     rol: { type: String },
-    activo: { type: Boolean, default: true },
+    departamento: { type: String },
+    activo: { type: Boolean },
 
 }, { versionKey: false });
 
