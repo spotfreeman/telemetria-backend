@@ -1,5 +1,17 @@
 const mongoose = require('mongoose');
 
+function parseFecha(fecha) {
+    // Si ya es Date, retorna igual
+    if (fecha instanceof Date) return fecha;
+    // Si es string tipo 'YYYY-MM-DD', parsea seguro
+    if (typeof fecha === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(fecha)) {
+        const [anio, mes, dia] = fecha.split('-').map(Number);
+        return new Date(anio, mes - 1, dia);
+    }
+    // Si no, intenta parsear igual
+    return new Date(fecha);
+}
+
 const proyectoSchema = new mongoose.Schema({
     nombre: { type: String, required: true },
     codigo: { type: String, required: true },
@@ -34,20 +46,16 @@ const proyectoSchema = new mongoose.Schema({
         fechafin: { type: Date },
         aumento: { type: Number },
         fechaactualizada: { type: Date }
-    }],
-
-
-
-
+    }]
 }, { versionKey: false });
 
 // Middleware para calcular fechaactualizada antes de guardar
 proyectoSchema.pre('save', function (next) {
     this.fechas.forEach(f => {
         if (f.fechafin && f.aumento !== undefined) {
-            const nuevaFecha = new Date(f.fechafin);
-            nuevaFecha.setDate(nuevaFecha.getDate() + f.aumento);
-            f.fechaactualizada = nuevaFecha;
+            const fechaFin = parseFecha(f.fechafin);
+            fechaFin.setDate(fechaFin.getDate() + f.aumento);
+            f.fechaactualizada = fechaFin;
         }
     });
     next();
@@ -58,13 +66,13 @@ proyectoSchema.pre('findOneAndUpdate', function (next) {
     if (update.fechas) {
         update.fechas.forEach(f => {
             if (f.fechafin && f.aumento !== undefined) {
-                const nuevaFecha = new Date(f.fechafin);
-                nuevaFecha.setDate(nuevaFecha.getDate() + f.aumento);
-                f.fechaactualizada = nuevaFecha;
+                const fechaFin = parseFecha(f.fechafin);
+                fechaFin.setDate(fechaFin.getDate() + f.aumento);
+                f.fechaactualizada = fechaFin;
             }
         });
     }
     next();
 });
 
-module.exports = mongoose.model('proyecto', proyectoSchema, 'proyectos'); // 'proyectos' is the collection name
+module.exports = mongoose.model('proyecto', proyectoSchema, 'proyectos');
