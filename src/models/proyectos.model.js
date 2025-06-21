@@ -29,9 +29,42 @@ const proyectoSchema = new mongoose.Schema({
         anio: { type: Number },
         descripcion: { type: String }
     }],
+    fechas: [{
+        fechainicio: { type: Date },
+        fechafin: { type: Date },
+        aumento: { type: Number },
+        fechaactualizada: { type: Date }
+    }],
+
 
 
 
 }, { versionKey: false });
+
+// Middleware para calcular fechaactualizada antes de guardar
+proyectoSchema.pre('save', function (next) {
+    this.fechas.forEach(f => {
+        if (f.fechafin && f.aumento !== undefined) {
+            const nuevaFecha = new Date(f.fechafin);
+            nuevaFecha.setDate(nuevaFecha.getDate() + f.aumento);
+            f.fechaactualizada = nuevaFecha;
+        }
+    });
+    next();
+});
+
+proyectoSchema.pre('findOneAndUpdate', function (next) {
+    const update = this.getUpdate();
+    if (update.fechas) {
+        update.fechas.forEach(f => {
+            if (f.fechafin && f.aumento !== undefined) {
+                const nuevaFecha = new Date(f.fechafin);
+                nuevaFecha.setDate(nuevaFecha.getDate() + f.aumento);
+                f.fechaactualizada = nuevaFecha;
+            }
+        });
+    }
+    next();
+});
 
 module.exports = mongoose.model('proyecto', proyectoSchema, 'proyectos'); // 'proyectos' is the collection name
