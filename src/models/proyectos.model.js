@@ -4,7 +4,7 @@ function parseFecha(fecha) {
     if (fecha instanceof Date) return fecha;
     if (typeof fecha === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(fecha)) {
         const [anio, mes, dia] = fecha.split('-').map(Number);
-        return new Date(anio, mes, dia);
+        return new Date(anio, mes - 1, dia);
     }
     return new Date(fecha);
 }
