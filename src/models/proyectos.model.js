@@ -51,10 +51,13 @@ proyectoSchema.pre('save', function (next) {
     this.fechas.forEach(f => {
         if (f.fechainicio) f.fechainicio = parseFecha(f.fechainicio);
         if (f.fechafin) f.fechafin = parseFecha(f.fechafin);
+        // Solo calcular fechaactualizada, NO modificar fechafin
         if (f.fechafin && f.aumento !== undefined) {
             const fechaFin = parseFecha(f.fechafin);
-            fechaFin.setDate(fechaFin.getDate() + Number(f.aumento));
-            f.fechaactualizada = fechaFin;
+            const aumentoDias = Number(f.aumento);
+            const fechaActualizada = new Date(fechaFin);
+            fechaActualizada.setDate(fechaActualizada.getDate() + aumentoDias);
+            f.fechaactualizada = fechaActualizada;
         }
     });
     next();
@@ -66,10 +69,13 @@ proyectoSchema.pre('findOneAndUpdate', function (next) {
         update.fechas.forEach(f => {
             if (f.fechainicio) f.fechainicio = parseFecha(f.fechainicio);
             if (f.fechafin) f.fechafin = parseFecha(f.fechafin);
+            // Solo calcular fechaactualizada, NO modificar fechafin
             if (f.fechafin && f.aumento !== undefined) {
                 const fechaFin = parseFecha(f.fechafin);
-                fechaFin.setDate(fechaFin.getDate() + Number(f.aumento));
-                f.fechaactualizada = fechaFin;
+                const aumentoDias = Number(f.aumento);
+                const fechaActualizada = new Date(fechaFin);
+                fechaActualizada.setDate(fechaActualizada.getDate() + aumentoDias);
+                f.fechaactualizada = fechaActualizada;
             }
         });
     }
