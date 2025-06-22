@@ -1,14 +1,11 @@
 const mongoose = require('mongoose');
 
 function parseFecha(fecha) {
-    // Si ya es Date, retorna igual
     if (fecha instanceof Date) return fecha;
-    // Si es string tipo 'YYYY-MM-DD', parsea seguro
     if (typeof fecha === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(fecha)) {
         const [anio, mes, dia] = fecha.split('-').map(Number);
         return new Date(anio, mes - 1, dia);
     }
-    // Si no, intenta parsear igual
     return new Date(fecha);
 }
 
@@ -52,9 +49,11 @@ const proyectoSchema = new mongoose.Schema({
 // Middleware para calcular fechaactualizada antes de guardar
 proyectoSchema.pre('save', function (next) {
     this.fechas.forEach(f => {
+        if (f.fechainicio) f.fechainicio = parseFecha(f.fechainicio);
+        if (f.fechafin) f.fechafin = parseFecha(f.fechafin);
         if (f.fechafin && f.aumento !== undefined) {
             const fechaFin = parseFecha(f.fechafin);
-            fechaFin.setDate(fechaFin.getDate() + f.aumento);
+            fechaFin.setDate(fechaFin.getDate() + Number(f.aumento));
             f.fechaactualizada = fechaFin;
         }
     });
@@ -65,9 +64,11 @@ proyectoSchema.pre('findOneAndUpdate', function (next) {
     const update = this.getUpdate();
     if (update.fechas) {
         update.fechas.forEach(f => {
+            if (f.fechainicio) f.fechainicio = parseFecha(f.fechainicio);
+            if (f.fechafin) f.fechafin = parseFecha(f.fechafin);
             if (f.fechafin && f.aumento !== undefined) {
                 const fechaFin = parseFecha(f.fechafin);
-                fechaFin.setDate(fechaFin.getDate() + f.aumento);
+                fechaFin.setDate(fechaFin.getDate() + Number(f.aumento));
                 f.fechaactualizada = fechaFin;
             }
         });
