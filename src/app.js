@@ -9,6 +9,7 @@ const proyectos = require('./routes/proyectos.routes');
 const usuarioRoutes = require('./routes/usuario.routes');
 const archivosRoutes = require('./routes/archivos.routes');
 const vacacionesRoutes = require('./routes/vacaciones.routes');
+const serveripRoutes = require('./routes/serverip.routes');
 
 // Test Unity MongoDB
 const unityRoutes = require('./routes/unity.routes');
@@ -34,6 +35,7 @@ app.use('/api/proyectos', proyectos);
 app.use('/api/usuarios', usuarioRoutes);
 app.use('/api/archivos', archivosRoutes);
 app.use('/api/vacaciones', vacacionesRoutes)
+app.use('/api/serverip', serveripRoutes);
 
 // Test Unity MongoDB
 app.use('/api/unity', unityRoutes);
