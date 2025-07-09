@@ -14,9 +14,8 @@ const serveripRoutes = require('./routes/serverip.routes');
 // Test Unity MongoDB
 const unityRoutes = require('./routes/unity.routes');
 
-
 // Importa y usa las rutas de autenticación
-const authRoutes = require('./src/routes/auth.routes');
+const authRoutes = require('./routes/auth.routes');
 
 const app = express();
 
