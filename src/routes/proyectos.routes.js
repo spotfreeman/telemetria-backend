@@ -6,7 +6,7 @@ const auth = require('../middleware/auth');
 router.use(auth); // Middleware de autenticación para todas las rutas
 
 // Ruta para obtener todos los proyectos
-router.get('/', proyectoController.getAll);
+router.get('/', auth, proyectoController.getAll);
 // Ruta para obtener un proyecto por ID
 router.get('/:id', auth, proyectoController.getById);
 // Ruta para crear un nuevo proyecto

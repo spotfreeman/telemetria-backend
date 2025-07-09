@@ -1,12 +1,19 @@
 const express = require('express');
 const cors = require('cors');
 
-// Importar las rutas de temperatura, rpi y notas
+// Importar las Rutas
 const temperaturaRoutes = require('./routes/temperatura.routes');
 const rpiRoutes = require('./routes/rpi.routes');
 const notas = require('./routes/nota.routes');
 const proyectos = require('./routes/proyectos.routes');
 const usuarioRoutes = require('./routes/usuario.routes');
+const archivosRoutes = require('./routes/archivos.routes');
+const vacacionesRoutes = require('./routes/vacaciones.routes');
+const serveripRoutes = require('./routes/serverip.routes');
+
+// Test Unity MongoDB
+const unityRoutes = require('./routes/unity.routes');
+
 
 // Importa y usa las rutas de autenticación
 const authRoutes = require('./src/routes/auth.routes');
@@ -30,5 +37,11 @@ app.use('/api/notas', notas);
 app.use('/api/auth', authRoutes);
 app.use('/api/proyectos', proyectos);
 app.use('/api/usuarios', usuarioRoutes);
+app.use('/api/archivos', archivosRoutes);
+app.use('/api/vacaciones', vacacionesRoutes)
+app.use('/api/serverip', serveripRoutes);
+
+// Test Unity MongoDB
+app.use('/api/unity', unityRoutes);
 
 module.exports = app;
