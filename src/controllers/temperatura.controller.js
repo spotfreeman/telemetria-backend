@@ -10,3 +10,4 @@ exports.getAll = async (req, res) => {
         res.status(500).json({ error: 'Error al obtener temperaturas' });
     }
 };
+
