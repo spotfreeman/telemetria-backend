@@ -1,4 +1,4 @@
-const Esp32 = require('../esp32/esp32.model.js');
+const Esp32 = require('./esp32.model');
 
 exports.getAll = async (req, res) => {
     try {

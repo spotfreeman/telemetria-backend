@@ -4,8 +4,8 @@ const esp32Schema = new mongoose.Schema({
     deviceId: { type: String, required: true },
     datas: [{
         timestamp: { type: Date, default: Date.now },
-        temperature: { type: Number, required: true },
-        humidity: { type: Number, required: true },
+        temperature: { type: Number },
+        humidity: { type: Number },
     }]
 
 }, { versionKey: false });
