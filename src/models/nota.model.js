@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+
 const notasSchema = new mongoose.Schema({
     fecha_hora: { type: Date, required: true },
     titulo: { type: String, required: true },
