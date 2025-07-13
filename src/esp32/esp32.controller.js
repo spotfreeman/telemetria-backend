@@ -1,5 +1,20 @@
 const Esp32 = require('./esp32.model');
 
+exports.post = async (req, res) => {
+    try {
+        const { deviceId, datas } = req.body;
+        // Puedes guardar como nuevo documento o actualizar uno existente
+        const doc = await Esp32Data.findOneAndUpdate(
+            { deviceId },
+            { $push: { datas: { $each: datas } } },
+            { upsert: true, new: true }
+        );
+        res.status(200).json(doc);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+}
+
 exports.getAll = async (req, res) => {
     try {
         const allEsp32 = await Esp32.find();
@@ -33,4 +48,6 @@ exports.delete = async (req, res) => {
         res.status(500).json({ error: 'Error al eliminar el dispositivo ESP32' });
     }
 }
+
+
 

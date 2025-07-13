@@ -8,5 +8,7 @@ router.use(auth); // Middleware de autenticación para todas las rutas
 router.get('/', auth, esp32Controller.getAll);
 router.create('/', auth, esp32Controller.create);
 router.delete('/:id', auth, esp32Controller.delete);
+router.post('/', auth, esp32Controller.post); // Ruta para recibir datos del ESP32
+
 
 module.exports = router;
