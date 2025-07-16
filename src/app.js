@@ -24,13 +24,18 @@ const app = express();
 
 //app.use(cors());
 
-app.use(cors({
-    origin: ['https://telemetria-frontend.onrender.com', 'https://chat.openai.com'],
+const corsOptions = {
+    origin: ['https://telemetria-frontend.onrender.com'],
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    allowedHeaders: ['Content-Type', 'Authorization']
-}));
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    optionsSuccessStatus: 200 // Para navegadores antiguos
+}
+
+app.use(cors(corsOptions));
+app.options('*', cors(corsOptions));
 
 app.use(express.json());
+
 
 // Rutas
 app.use('/api/temperaturas', temperaturaRoutes);

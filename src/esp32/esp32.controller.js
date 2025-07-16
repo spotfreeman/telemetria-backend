@@ -15,9 +15,6 @@ exports.post = async (req, res) => {
     }
 }
 
-
-
-
 exports.get = async (req, res) => {
     try {
         const allEsp32 = await Esp32.find();
