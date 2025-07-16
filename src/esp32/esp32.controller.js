@@ -3,7 +3,7 @@ const Esp32 = require('./esp32.model');
 exports.post = async (req, res) => {
     try {
         const { deviceId, datas } = req.body;
-        // Puedes guardar como nuevo documento o actualizar uno existente
+        // Actualiza el documento existente o crea uno nuevo si no existe
         const doc = await Esp32.findOneAndUpdate(
             { deviceId },
             { $push: { datas: { $each: datas } } },

@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const esp32Schema = new mongoose.Schema({
-    deviceId: { type: String, required: true },
+    deviceId: { type: String },
     datas: [{
         timestamp: { type: Date, default: Date.now },
         temperature: { type: Number },
