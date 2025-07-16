@@ -18,7 +18,7 @@ exports.post = async (req, res) => {
 
 
 
-exports.getAll = async (req, res) => {
+exports.get = async (req, res) => {
     try {
         const allEsp32 = await Esp32.find();
         res.json(allEsp32);
@@ -28,16 +28,12 @@ exports.getAll = async (req, res) => {
     }
 }
 
-exports.create = async (req, res) => {
-    try {
-        const newEsp32 = new Esp32(req.body);
-        await newEsp32.save();
-        res.status(201).json(newEsp32);
-    } catch (err) {
-        console.error('Error al crear el dispositivo ESP32:', err);
-        res.status(500).json({ error: 'Error al crear el dispositivo ESP32' });
-    }
+exports.getAll = async (req, res) => {
+    const device = await Esp32.findOne({ deviceId: req.params.deviceId });
+    if (!device) return res.status(404).json({ error: 'No encontrado' });
+    res.json(device);
 }
+
 
 exports.delete = async (req, res) => {
     try {
