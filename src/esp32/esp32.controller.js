@@ -4,7 +4,7 @@ exports.post = async (req, res) => {
     try {
         const { deviceId, datas } = req.body;
         // Puedes guardar como nuevo documento o actualizar uno existente
-        const doc = await Esp32Data.findOneAndUpdate(
+        const doc = await Esp32.findOneAndUpdate(
             { deviceId },
             { $push: { datas: { $each: datas } } },
             { upsert: true, new: true }
@@ -14,6 +14,9 @@ exports.post = async (req, res) => {
         res.status(500).json({ error: err.message });
     }
 }
+
+
+
 
 exports.getAll = async (req, res) => {
     try {
