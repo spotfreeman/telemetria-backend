@@ -26,9 +26,16 @@ exports.get = async (req, res) => {
 }
 
 exports.getAll = async (req, res) => {
-    const device = await Esp32.findOne({ deviceId: req.params.deviceId });
-    if (!device) return res.status(404).json({ error: 'No encontrado' });
-    res.json(device);
+    try {
+        const devices = await Esp32.find({ deviceId: req.params.deviceId });
+        if (!devices || devices.length === 0) {
+            return res.status(404).json({ error: 'No se encontraron dispositivos' });
+        }
+        res.json(devices);
+    } catch (err) {
+        console.error('Error al obtener dispositivos ESP32:', err);
+        res.status(500).json({ error: 'Error al obtener dispositivos ESP32' });
+    }
 }
 
 
