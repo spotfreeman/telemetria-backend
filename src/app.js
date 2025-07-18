@@ -44,7 +44,7 @@ app.use('/api/usuarios', usuarioRoutes);
 app.use('/api/archivos', archivosRoutes);
 app.use('/api/vacaciones', vacacionesRoutes)
 app.use('/api/serverip', serveripRoutes);
-app.use('/api/esp32', esp32Routes);
+//app.use('/api/esp32', esp32Routes);
 
 // Test Unity MongoDB
 app.use('/api/unity', unityRoutes);
