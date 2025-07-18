@@ -22,8 +22,6 @@ const authRoutes = require('./routes/auth.routes');
 
 const app = express();
 
-//app.use(cors());
-
 const corsOptions = {
     origin: ['https://telemetria-frontend.onrender.com'],
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
@@ -51,5 +49,9 @@ app.use('/api/esp32', esp32Routes);
 
 // Test Unity MongoDB
 app.use('/api/unity', unityRoutes);
+
+app.get('*', (req, res) => {
+    res.sendFile(__dirname + '/index.html');
+});
 
 module.exports = app;
