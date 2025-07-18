@@ -1,9 +1,6 @@
 const express = require('express');
 const cors = require('cors');
 
-// implementando version impresa
-const path = require('path');
-
 // Importar las Rutas
 const temperaturaRoutes = require('./routes/temperatura.routes');
 const rpiRoutes = require('./routes/rpi.routes');
@@ -37,10 +34,6 @@ app.options('*', cors(corsOptions));
 
 app.use(express.json());
 
-// Servir archivos estáticos desde la carpeta 'build'
-app.use(express.static(path.join(__dirname, 'build')));
-
-
 // Rutas
 app.use('/api/temperaturas', temperaturaRoutes);
 app.use('/api/rpis', rpiRoutes);
@@ -55,10 +48,5 @@ app.use('/api/esp32', esp32Routes);
 
 // Test Unity MongoDB
 app.use('/api/unity', unityRoutes);
-
-// Catch-all para rutas no API (React Router)
-app.get('*', (req, res) => {
-    res.sendFile(__dirname + '/index.html');
-});
 
 module.exports = app;
