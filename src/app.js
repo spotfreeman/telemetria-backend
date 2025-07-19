@@ -35,18 +35,18 @@ app.options('*', cors(corsOptions));
 app.use(express.json());
 
 // Rutas
-// app.use('/api/temperaturas', temperaturaRoutes);
-// app.use('/api/rpis', rpiRoutes);
-// app.use('/api/notas', notas);
-// app.use('/api/auth', authRoutes);
-// app.use('/api/proyectos', proyectos);
-// app.use('/api/usuarios', usuarioRoutes);
-// app.use('/api/archivos', archivosRoutes);
-// app.use('/api/vacaciones', vacacionesRoutes)
-// app.use('/api/serverip', serveripRoutes);
-// app.use('/api/esp32', esp32Routes);
+app.use('/api/temperaturas', temperaturaRoutes);
+app.use('/api/rpis', rpiRoutes);
+app.use('/api/notas', notas);
+app.use('/api/auth', authRoutes);
+app.use('/api/proyectos', proyectos);
+app.use('/api/usuarios', usuarioRoutes);
+app.use('/api/archivos', archivosRoutes);
+app.use('/api/vacaciones', vacacionesRoutes)
+app.use('/api/serverip', serveripRoutes);
+app.use('/api/esp32', esp32Routes);
 
 // Test Unity MongoDB
-// app.use('/api/unity', unityRoutes);
+app.use('/api/unity', unityRoutes);
 
 module.exports = app;
