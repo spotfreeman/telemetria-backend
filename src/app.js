@@ -26,7 +26,7 @@ const corsOptions = {
     origin: ['https://telemetria-frontend.onrender.com'],
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization'],
-    optionsSuccessStatus: 200 // Para navegadores antiguos
+    optionsSuccessStatus: 200
 }
 
 app.use(cors(corsOptions));
