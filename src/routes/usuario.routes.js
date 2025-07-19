@@ -4,10 +4,10 @@ const usuarioController = require('../controllers/usuario.controller');
 const auth = require('../middleware/auth');
 
 
-router.post('/:register', usuarioController.register);
-router.post('/:login', usuarioController.login);
+router.post('/register', usuarioController.register);
+router.post('/login', usuarioController.login);
 
-router.get('/:me', auth, usuarioController.getProfile);
-router.put('/:me', auth, usuarioController.updateProfile);
+router.get('/me', auth, usuarioController.getProfile);
+router.put('/me', auth, usuarioController.updateProfile);
 
 module.exports = router;
