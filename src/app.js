@@ -12,7 +12,7 @@ const vacacionesRoutes = require('./routes/vacaciones.routes');
 const serveripRoutes = require('./routes/serverip.routes');
 
 // Importar las Rutas de ESP32
-const esp32Routes = require('./esp32/esp32.routes');
+// const esp32Routes = require('./esp32/esp32.routes');
 
 // Test Unity MongoDB
 const unityRoutes = require('./routes/unity.routes');
@@ -44,7 +44,7 @@ app.use('/api/usuarios', usuarioRoutes);
 app.use('/api/archivos', archivosRoutes);
 app.use('/api/vacaciones', vacacionesRoutes)
 app.use('/api/serverip', serveripRoutes);
-app.use('/api/esp32', esp32Routes);
+// app.use('/api/esp32', esp32Routes);
 
 // Test Unity MongoDB
 app.use('/api/unity', unityRoutes);
