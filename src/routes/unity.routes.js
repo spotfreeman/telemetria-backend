@@ -9,4 +9,4 @@ router.post('/update', unityController.update);
 
 // Exportar el router
 module.exports = router;
-// Este archivo define las rutas para manejar las operaciones CRUD de unidades en la aplicación.
+
