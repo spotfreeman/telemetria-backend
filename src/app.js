@@ -11,6 +11,9 @@ const archivosRoutes = require('./routes/archivos.routes');
 const vacacionesRoutes = require('./routes/vacaciones.routes');
 const serveripRoutes = require('./routes/serverip.routes');
 
+// Importar las Rutas de ESP32
+const esp32Routes = require('./esp32/esp32.routes');
+
 // Test Unity MongoDB
 const unityRoutes = require('./routes/unity.routes');
 
@@ -19,13 +22,15 @@ const authRoutes = require('./routes/auth.routes');
 
 const app = express();
 
-//app.use(cors());
-
-app.use(cors({
-    origin: ['https://telemetria-frontend.onrender.com', 'https://chat.openai.com'],
+const corsOptions = {
+    origin: ['https://telemetria-frontend.onrender.com'],
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    allowedHeaders: ['Content-Type', 'Authorization']
-}));
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    optionsSuccessStatus: 200
+}
+
+app.use(cors(corsOptions));
+app.options('*', cors(corsOptions));
 
 app.use(express.json());
 
@@ -39,6 +44,7 @@ app.use('/api/usuarios', usuarioRoutes);
 app.use('/api/archivos', archivosRoutes);
 app.use('/api/vacaciones', vacacionesRoutes)
 app.use('/api/serverip', serveripRoutes);
+app.use('/api/esp32', esp32Routes);
 
 // Test Unity MongoDB
 app.use('/api/unity', unityRoutes);
