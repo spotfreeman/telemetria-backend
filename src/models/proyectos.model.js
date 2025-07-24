@@ -43,7 +43,12 @@ const proyectoSchema = new mongoose.Schema({
         fechafin: { type: Date },
         aumento: { type: Number },
         fechaactualizada: { type: Date }
-    }]
+    }],
+    licitacion: [
+        {
+            idlicitacion: { type: String },
+        }
+    ]
 }, { versionKey: false });
 
 // Middleware para calcular fechaactualizada antes de guardar
