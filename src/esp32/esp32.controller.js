@@ -9,7 +9,7 @@ exports.post = async (req, res) => {
             { $push: { datas: { $each: datas } } },
             { upsert: true, new: true }
         );
-        res.json({ message: 'Informacion recibida con exito.' });
+        res.json('Servidor : Informacion recibida con exito.');
         // res.status(200).json(doc);
     } catch (err) {
         res.status(500).json({ error: err.message });
