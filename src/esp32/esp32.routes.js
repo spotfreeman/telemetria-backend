@@ -5,8 +5,8 @@ const auth = require('../middleware/auth');
 
 router.use(auth); // Middleware de autenticación para todas las rutas
 
-router.get('/', auth, esp32Controller.get);
-router.get('/:deviceId', auth, esp32Controller.getAll);
-router.post('/', auth, esp32Controller.post);
+router.get('/', esp32Controller.get);
+router.get('/:deviceId', esp32Controller.getAll);
+router.post('/', esp32Controller.post);
 
 module.exports = router;
