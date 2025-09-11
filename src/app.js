@@ -6,10 +6,12 @@ const temperaturaRoutes = require('./routes/temperatura.routes');
 const rpiRoutes = require('./routes/rpi.routes');
 const notas = require('./routes/nota.routes');
 const proyectos = require('./routes/proyectos.routes');
-const usuarioRoutes = require('./routes/usuario.routes');
 const archivosRoutes = require('./routes/archivos.routes');
 const vacacionesRoutes = require('./routes/vacaciones.routes');
 const serveripRoutes = require('./routes/serverip.routes');
+
+// Importar las Rutas de Usuarios
+const usuarioRoutes = require('./routes/usuarios/usuario.routes');
 
 // Importar las Rutas de ESP32
 const esp32Routes = require('./esp32/esp32.routes');
