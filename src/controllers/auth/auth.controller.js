@@ -56,18 +56,16 @@ const login = async (req, res) => {
             { expiresIn: '2h' }
         );
 
-        res.json(formatSuccessResponse({
+        // Respuesta compatible con frontend existente
+        res.json({
+            message: 'Login exitoso',
             token,
-            usuario: {
-                id: usuario._id,
-                username: usuario.username,
-                nombre: usuario.nombre,
-                apellido: usuario.apellido,
-                email: usuario.email,
-                rol: usuario.rol,
-                departamento: usuario.departamento
-            }
-        }, 'Login exitoso'));
+            usuario: usuario.username,
+            nombre: usuario.nombre,
+            apellido: usuario.apellido,
+            email: usuario.email,
+            rol: usuario.rol
+        });
 
     } catch (err) {
         console.error('Error en login:', err);
@@ -105,13 +103,13 @@ const register = async (req, res) => {
 
         await nuevoUsuario.save();
 
-        res.status(HTTP_STATUS.CREATED).json(
-            formatSuccessResponse({
-                id: nuevoUsuario._id,
-                username: nuevoUsuario.username,
-                email: nuevoUsuario.email
-            }, 'Usuario registrado exitosamente')
-        );
+        // Respuesta compatible con frontend existente
+        res.status(HTTP_STATUS.CREATED).json({
+            message: 'Usuario registrado exitosamente',
+            id: nuevoUsuario._id,
+            username: nuevoUsuario.username,
+            email: nuevoUsuario.email
+        });
 
     } catch (err) {
         console.error('Error en registro:', err);
