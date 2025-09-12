@@ -1,5 +1,4 @@
 const jwt = require('jsonwebtoken');
-const SECRET_KEY = 'miclavesecreta';
 
 function verificarToken(req, res, next) {
     const token = req.headers['authorization'];
@@ -7,8 +6,8 @@ function verificarToken(req, res, next) {
         return res.status(401).json({ mensaje: 'Token no proporcionado' });
     }
     try {
-        const decoded = jwt.verify(token.replace('Bearer ', ''), SECRET_KEY);
-        req.usuario = decoded;
+        const decoded = jwt.verify(token.replace('Bearer ', ''), process.env.JWT_SECRET);
+        req.user = decoded; // Cambiar a req.user para consistencia
         next();
     } catch (error) {
         res.status(401).json({ mensaje: 'Token inválido' });

@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const archivosController = require('../controllers/archivos.controller');
-const auth = require('../middleware/auth');
+const auth = require('../middleware/auth.middleware');
 
 // Middleware de autenticación para todas las rutas
 router.use(auth);

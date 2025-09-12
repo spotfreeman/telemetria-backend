@@ -1,4 +1,4 @@
-const archivos = require('../models/archivos.model');
+const archivos = require('../models/File');
 
 exports.getAll = async (req, res) => {
     try {

@@ -1,4 +1,4 @@
-const vacaciones = require('../models/vacaciones.model');
+const vacaciones = require('../models/Vacation');
 exports.getAll = async (req, res) => {
     try {
         const allVacaciones = await vacaciones.find();

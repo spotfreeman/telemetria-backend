@@ -1,42 +1,22 @@
 const express = require('express');
 const router = express.Router();
-const Usuario = require('../models/usuarios.model');
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
+const authController = require('../controllers/auth/auth.controller');
+const userController = require('../controllers/auth/user.controller');
 const verificarToken = require('../middleware/auth.middleware');
+const { validarUsuario } = require('../middleware/validation.middleware');
 
-// Clave secreta para firmar el token (guárdala en una variable de entorno en producción)
-const SECRET_KEY = 'miclavesecreta';
+// Rutas públicas de autenticación
+router.post('/login', authController.login);
+router.post('/register', validarUsuario, authController.register);
+router.get('/verify', verificarToken, authController.verifyToken);
 
-router.post('/login', async (req, res) => {
-    const { email, password } = req.body;
-    try {
-        const usuario = await Usuario.findOne({ email });
-        if (!usuario) {
-            return res.status(400).json({ mensaje: 'Usuario no encontrado' });
-        }
-        const esValida = await bcrypt.compare(password, usuario.password);
-        if (!esValida) {
-            return res.status(400).json({ mensaje: 'Contraseña incorrecta' });
-        }
-        // Generar token JWT
-        const token = jwt.sign(
-            { id: usuario._id, email: usuario.email, nombre: usuario.nombre },
-            SECRET_KEY,
-            { expiresIn: '2h' }
-        );
-        res.json({ mensaje: 'Login exitoso', token });
-    } catch (error) {
-        res.status(500).json({ mensaje: 'Error en el servidor' });
-    }
-});
+// Rutas protegidas de usuario
+router.get('/profile', verificarToken, userController.getProfile);
+router.put('/profile', verificarToken, userController.updateProfile);
+router.put('/change-password', verificarToken, userController.changePassword);
 
-// Ruta protegida de ejemplo
-router.get('/pagina-protegida', verificarToken, (req, res) => {
-    res.json({
-        mensaje: '¡Bienvenido a la página protegida!',
-        usuario: req.usuario
-    });
-});
+// Rutas de administración (solo para admins)
+router.get('/users', verificarToken, userController.getAllUsers);
+router.put('/users/:id/status', verificarToken, userController.updateUserStatus);
 
 module.exports = router;

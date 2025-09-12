@@ -1,4 +1,4 @@
-const ipRaspberry = require('../models/rpi.model');
+const ipRaspberry = require('../models/RPI');
 
 exports.getAll = async (req, res) => {
     try {

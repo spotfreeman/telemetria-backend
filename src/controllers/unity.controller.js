@@ -1,4 +1,4 @@
-const User = require('../models/unity.model');
+const User = require('../models/Unity');
 
 exports.post = async (req, res) => {
     try {

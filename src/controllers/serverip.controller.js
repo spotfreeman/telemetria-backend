@@ -1,4 +1,4 @@
-const unityIpServerIp = require('../models/serverip.model');
+const unityIpServerIp = require('../models/ServerIP');
 
 exports.getAll = async (req, res) => {
     try {

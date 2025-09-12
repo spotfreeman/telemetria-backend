@@ -1,4 +1,4 @@
-const Esp32 = require('./esp32.model');
+const ESP32 = require('../../models/ESP32');
 
 exports.post = async (req, res) => {
     try {
@@ -28,7 +28,7 @@ exports.post = async (req, res) => {
         }
 
         // Actualiza el documento existente o crea uno nuevo si no existe
-        const doc = await Esp32.findOneAndUpdate(
+        const doc = await ESP32.findOneAndUpdate(
             { deviceId },
             {
                 $push: { datas: { $each: datas } },
@@ -60,13 +60,13 @@ exports.get = async (req, res) => {
             query.status = status;
         }
 
-        const allEsp32 = await Esp32.find(query)
+        const allEsp32 = await ESP32.find(query)
             .sort({ lastUpdate: -1 })
             .limit(parseInt(limit))
             .skip(parseInt(offset))
             .select('-datas'); // Excluir los datos para mejorar el rendimiento
 
-        const total = await Esp32.countDocuments(query);
+        const total = await ESP32.countDocuments(query);
 
         res.json({
             dispositivos: allEsp32,
@@ -82,7 +82,7 @@ exports.get = async (req, res) => {
 
 exports.getAll = async (req, res) => {
     try {
-        const device = await Esp32.findOne({ deviceId: req.params.deviceId });
+        const device = await ESP32.findOne({ deviceId: req.params.deviceId });
         if (!device) {
             return res.status(404).json({ error: 'No se encontró el dispositivo', datas: [] });
         }
@@ -100,7 +100,7 @@ exports.getAll = async (req, res) => {
 
 exports.delete = async (req, res) => {
     try {
-        const deletedEsp32 = await Esp32.findByIdAndDelete(req.params.id);
+        const deletedEsp32 = await ESP32.findByIdAndDelete(req.params.id);
         if (!deletedEsp32) {
             return res.status(404).json({ error: 'Dispositivo ESP32 no encontrado' });
         }
@@ -125,7 +125,7 @@ exports.getStats = async (req, res) => {
             if (fecha_fin) matchQuery['datas.timestamp'].$lte = new Date(fecha_fin);
         }
 
-        const device = await Esp32.findOne({ deviceId });
+        const device = await ESP32.findOne({ deviceId });
         if (!device) {
             return res.status(404).json({ error: 'Dispositivo no encontrado' });
         }
@@ -168,7 +168,7 @@ exports.cleanOldData = async (req, res) => {
         const cutoffDate = new Date();
         cutoffDate.setDate(cutoffDate.getDate() - parseInt(days));
 
-        const result = await Esp32.updateOne(
+        const result = await ESP32.updateOne(
             { deviceId },
             {
                 $pull: {
