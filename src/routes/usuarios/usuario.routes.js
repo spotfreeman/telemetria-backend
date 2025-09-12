@@ -1,11 +1,13 @@
 const express = require('express');
 const router = express.Router();
+const authController = require('../../controllers/auth/auth.controller');
 const userController = require('../../controllers/auth/user.controller');
 const verificarToken = require('../../middleware/auth.middleware');
+const { validarUsuario } = require('../../middleware/validation.middleware');
 
-// Rutas de autenticación (ya están en auth.routes.js)
-// router.post('/register', registerController.register);
-// router.post('/login', loginController.login);
+// Rutas de autenticación (para compatibilidad con frontend)
+router.post('/login', authController.login);
+router.post('/register', validarUsuario, authController.register);
 
 // Rutas protegidas para gestión de usuarios
 router.get('/profile', verificarToken, userController.getProfile);
