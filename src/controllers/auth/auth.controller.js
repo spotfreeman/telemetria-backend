@@ -81,14 +81,9 @@ const login = async (req, res) => {
 const register = async (req, res) => {
     try {
         const { username, password, email, nombre, apellido, rol, departamento } = req.body;
-        
-        console.log('=== REGISTRO DEBUG ===');
-        console.log('Datos recibidos:', { username, email, nombre, apellido, rol, departamento });
-        console.log('Password length:', password ? password.length : 'undefined');
 
         // Validar datos requeridos
         if (!username || !password || !email) {
-            console.log('Error: Faltan datos requeridos');
             return res.status(HTTP_STATUS.BAD_REQUEST).json(
                 formatErrorResponse('Username, password y email son requeridos')
             );
@@ -106,12 +101,7 @@ const register = async (req, res) => {
             activo: true
         });
 
-        console.log('Usuario creado en memoria:', nuevoUsuario);
-        console.log('Intentando guardar en MongoDB...');
-        
         await nuevoUsuario.save();
-        
-        console.log('Usuario guardado exitosamente:', nuevoUsuario._id);
 
         // Respuesta compatible con frontend existente
         res.status(HTTP_STATUS.CREATED).json({
@@ -122,21 +112,15 @@ const register = async (req, res) => {
         });
 
     } catch (err) {
-        console.error('=== ERROR EN REGISTRO ===');
-        console.error('Error completo:', err);
-        console.error('Error message:', err.message);
-        console.error('Error code:', err.code);
-        console.error('Error name:', err.name);
+        console.error('Error en registro:', err);
 
         if (err.code === 11000) {
             const campo = Object.keys(err.keyValue)[0];
-            console.log(`Error: El ${campo} ya existe`);
             return res.status(HTTP_STATUS.BAD_REQUEST).json(
                 formatErrorResponse(`El ${campo} ya existe`)
             );
         }
 
-        console.log('Error genérico al registrar usuario');
         res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json(
             formatErrorResponse('Error al registrar usuario')
         );
