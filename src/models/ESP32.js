@@ -62,4 +62,4 @@ esp32Schema.index({ lastUpdate: -1 });
 esp32Schema.index({ status: 1 });
 esp32Schema.index({ 'datas.timestamp': -1 });
 
-module.exports = mongoose.model('ESP32', esp32Schema);
+module.exports = mongoose.model('ESP32', esp32Schema, 'esp32_data');
