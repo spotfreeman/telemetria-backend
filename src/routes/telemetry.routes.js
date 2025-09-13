@@ -23,3 +23,4 @@ router.delete('/esp32/:id', verificarToken, esp32Controller.delete);
 router.delete('/esp32/:deviceId/clean', verificarToken, esp32Controller.cleanOldData);
 
 module.exports = router;
+

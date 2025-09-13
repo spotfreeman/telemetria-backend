@@ -83,7 +83,7 @@ const getTemperatureChart = async (req, res) => {
         const { periodo = 'dia', fecha_inicio, fecha_fin } = req.query;
         let matchQuery = createDateFilters(fecha_inicio, fecha_fin);
         let groupFormat = '%Y-%m-%d';
-        
+
         // Si no se especifica fecha, usar los últimos 7 días por defecto
         if (!fecha_inicio && !fecha_fin) {
             const fechaLimite = new Date();

@@ -48,41 +48,28 @@ const validarUsuario = (req, res, next) => {
     const { username, email, password } = req.body;
     const errores = [];
 
-    console.log('=== VALIDACIÓN USUARIO DEBUG ===');
-    console.log('Datos recibidos en validación:', { username, email, password: password ? '***' : 'undefined' });
-    console.log('Username length:', username ? username.length : 'undefined');
-    console.log('Email valid:', email ? /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) : 'undefined');
-    console.log('Password length:', password ? password.length : 'undefined');
-
     // Validar username
     if (!username || username.trim().length < 3) {
         errores.push('El nombre de usuario debe tener al menos 3 caracteres');
-        console.log('Error: Username inválido');
     }
 
     // Validar email
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!email || !emailRegex.test(email)) {
         errores.push('El email debe ser válido');
-        console.log('Error: Email inválido');
     }
 
     // Validar password
     if (!password || password.length < 6) {
         errores.push('La contraseña debe tener al menos 6 caracteres');
-        console.log('Error: Password inválido');
     }
 
-    console.log('Errores encontrados:', errores);
-
     if (errores.length > 0) {
-        console.log('Enviando error 400 con errores:', errores);
         return res.status(HTTP_STATUS.BAD_REQUEST).json(
             formatErrorResponse('Datos de usuario inválidos', errores)
         );
     }
 
-    console.log('Validación exitosa, continuando...');
     next();
 };
 

@@ -160,3 +160,4 @@ class TelemetryService {
 }
 
 module.exports = TelemetryService;
+

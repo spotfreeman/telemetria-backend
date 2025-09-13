@@ -34,3 +34,4 @@ module.exports = {
     ALERT_HUMIDITY_MAX: process.env.ALERT_HUMIDITY_MAX || 80,
     ALERT_HUMIDITY_MIN: process.env.ALERT_HUMIDITY_MIN || 20
 };
+

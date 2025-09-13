@@ -43,13 +43,14 @@ const getProfile = async (req, res) => {
  */
 const updateProfile = async (req, res) => {
     try {
-        const { nombre, apellido, email, departamento } = req.body;
+        const { nombre, apellido, email, departamento, rol } = req.body;
 
         const updateData = {};
         if (nombre !== undefined) updateData.nombre = nombre;
         if (apellido !== undefined) updateData.apellido = apellido;
         if (email !== undefined) updateData.email = email;
         if (departamento !== undefined) updateData.departamento = departamento;
+        if (rol !== undefined) updateData.rol = rol;
 
         const usuario = await User.findByIdAndUpdate(
             req.user.userId,
