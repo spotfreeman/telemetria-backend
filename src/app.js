@@ -61,7 +61,7 @@ app.use('/api/usuarios', require('./routes/usuarios/usuario.routes'));
 app.use('/api/archivos', archivosRoutes);
 app.use('/api/vacaciones', vacacionesRoutes);
 app.use('/api/serverip', serveripRoutes);
-app.use('/api/esp32', require('./esp32/esp32.routes'));
+// ESP32 routes moved to /api/telemetry/esp32
 app.use('/api/unity', unityRoutes);
 
 // Middleware para manejo de errores
