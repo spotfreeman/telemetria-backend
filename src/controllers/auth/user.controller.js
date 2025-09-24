@@ -146,6 +146,10 @@ const changePassword = async (req, res) => {
  */
 const getAllUsers = async (req, res) => {
     try {
+        console.log('📋 getAllUsers ejecutándose');
+        console.log('📋 req.user:', req.user);
+        console.log('📋 req.query:', req.query);
+        
         const { limit = 50, offset = 0, rol, activo } = req.query;
 
         let query = {};

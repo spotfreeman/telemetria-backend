@@ -6,20 +6,28 @@ const { HTTP_STATUS } = require('../utils/constants');
  */
 const requireAdmin = (req, res, next) => {
     try {
+        console.log('🔐 Middleware requireAdmin ejecutándose');
+        console.log('🔐 req.user:', req.user);
+        
         // Verificar que el usuario esté autenticado (debe venir después de verificarToken)
         if (!req.user) {
+            console.log('❌ Usuario no autenticado en requireAdmin');
             return res.status(HTTP_STATUS.UNAUTHORIZED).json(
                 formatErrorResponse('Usuario no autenticado')
             );
         }
 
+        console.log('🔐 Usuario autenticado, rol:', req.user.rol);
+
         // Verificar que tenga rol de administrador
         if (req.user.rol !== 'admin') {
+            console.log('❌ Usuario no tiene rol de admin:', req.user.rol);
             return res.status(HTTP_STATUS.FORBIDDEN).json(
                 formatErrorResponse('Acceso denegado. Se requiere rol de administrador')
             );
         }
 
+        console.log('✅ Usuario autorizado como admin');
         next();
     } catch (err) {
         console.error('Error en middleware de autorización:', err);
