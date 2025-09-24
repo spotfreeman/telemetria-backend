@@ -224,6 +224,10 @@ const updateUserStatus = async (req, res) => {
  */
 const updateUserRole = async (req, res) => {
     try {
+        console.log('🔄 updateUserRole ejecutándose');
+        console.log('🔄 req.params:', req.params);
+        console.log('🔄 req.body:', req.body);
+        
         const { id } = req.params;
         const { rol } = req.body;
 
