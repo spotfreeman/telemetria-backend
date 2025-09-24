@@ -215,10 +215,102 @@ const updateUserStatus = async (req, res) => {
     }
 };
 
+/**
+ * Actualizar rol de usuario específico (solo para administradores)
+ */
+const updateUserRole = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { rol } = req.body;
+
+        if (!rol) {
+            return res.status(HTTP_STATUS.BAD_REQUEST).json(
+                formatErrorResponse('El rol es requerido')
+            );
+        }
+
+        // Validar que el rol sea válido
+        const rolesValidos = ['admin', 'user', 'viewer', 'editor'];
+        if (!rolesValidos.includes(rol)) {
+            return res.status(HTTP_STATUS.BAD_REQUEST).json(
+                formatErrorResponse('Rol inválido. Roles válidos: ' + rolesValidos.join(', '))
+            );
+        }
+
+        // No permitir que un usuario cambie su propio rol
+        if (req.user.userId === id) {
+            return res.status(HTTP_STATUS.FORBIDDEN).json(
+                formatErrorResponse('No puedes cambiar tu propio rol')
+            );
+        }
+
+        const usuario = await User.findByIdAndUpdate(
+            id,
+            { rol },
+            { new: true, runValidators: true }
+        ).select('-password');
+
+        if (!usuario) {
+            return res.status(HTTP_STATUS.NOT_FOUND).json(
+                formatErrorResponse('Usuario no encontrado')
+            );
+        }
+
+        res.json(formatSuccessResponse({
+            id: usuario._id,
+            username: usuario.username,
+            email: usuario.email,
+            rol: usuario.rol,
+            activo: usuario.activo
+        }, 'Rol actualizado exitosamente'));
+
+    } catch (err) {
+        console.error('Error al actualizar rol:', err);
+        res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json(
+            formatErrorResponse('Error al actualizar rol')
+        );
+    }
+};
+
+/**
+ * Eliminar usuario (solo para administradores)
+ */
+const deleteUser = async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        // No permitir que un usuario se elimine a sí mismo
+        if (req.user.userId === id) {
+            return res.status(HTTP_STATUS.FORBIDDEN).json(
+                formatErrorResponse('No puedes eliminar tu propia cuenta')
+            );
+        }
+
+        const usuario = await User.findById(id);
+        if (!usuario) {
+            return res.status(HTTP_STATUS.NOT_FOUND).json(
+                formatErrorResponse('Usuario no encontrado')
+            );
+        }
+
+        await User.findByIdAndDelete(id);
+
+        res.json(formatSuccessResponse(null, 'Usuario eliminado exitosamente'));
+
+    } catch (err) {
+        console.error('Error al eliminar usuario:', err);
+        res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json(
+            formatErrorResponse('Error al eliminar usuario')
+        );
+    }
+};
+
 module.exports = {
     getProfile,
     updateProfile,
     changePassword,
     getAllUsers,
-    updateUserStatus
+    updateUserStatus,
+    updateUserRole,
+    deleteUser
 };

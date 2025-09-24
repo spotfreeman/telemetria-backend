@@ -35,3 +35,4 @@ module.exports = {
     ALERT_HUMIDITY_MIN: process.env.ALERT_HUMIDITY_MIN || 20
 };
 
+
