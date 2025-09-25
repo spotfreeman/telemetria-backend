@@ -287,7 +287,7 @@ const createUser = async (req, res) => {
     try {
         console.log('👤 createUser ejecutándose');
         console.log('👤 req.body:', req.body);
-        
+
         const { username, email, password, nombre, apellido, rol, departamento } = req.body;
 
         // Validaciones básicas
@@ -365,13 +365,13 @@ const createUser = async (req, res) => {
 
     } catch (err) {
         console.error('Error al crear usuario:', err);
-        
+
         if (err.code === 11000) {
             return res.status(HTTP_STATUS.BAD_REQUEST).json(
                 formatErrorResponse('El username o email ya está en uso')
             );
         }
-        
+
         res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json(
             formatErrorResponse('Error al crear usuario')
         );
