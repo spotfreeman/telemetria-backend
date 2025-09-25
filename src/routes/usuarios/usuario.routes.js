@@ -17,6 +17,7 @@ router.put('/change-password', verificarToken, userController.changePassword);
 
 // Rutas de administración de usuarios (solo para administradores)
 router.get('/', verificarToken, requireAdmin, userController.getAllUsers);
+router.post('/', verificarToken, requireAdmin, userController.createUser);
 router.put('/:id/rol', verificarToken, requireAdmin, userController.updateUserRole);
 router.delete('/:id', verificarToken, requireAdmin, userController.deleteUser);
 

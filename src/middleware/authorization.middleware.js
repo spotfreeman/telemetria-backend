@@ -8,7 +8,7 @@ const requireAdmin = (req, res, next) => {
     try {
         console.log('🔐 Middleware requireAdmin ejecutándose');
         console.log('🔐 req.user:', req.user);
-        
+
         // Verificar que el usuario esté autenticado (debe venir después de verificarToken)
         if (!req.user) {
             console.log('❌ Usuario no autenticado en requireAdmin');
