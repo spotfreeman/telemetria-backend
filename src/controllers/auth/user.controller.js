@@ -288,93 +288,58 @@ const createUser = async (req, res) => {
         console.log('👤 createUser ejecutándose');
         console.log('👤 req.body:', req.body);
 
-        const { username, email, password, nombre, apellido, rol, departamento } = req.body;
+        const { username, email, password, nombre, apellido, rol = 'usuario' } = req.body;
 
         // Validaciones básicas
         if (!username || !email || !password) {
-            return res.status(HTTP_STATUS.BAD_REQUEST).json(
-                formatErrorResponse('Username, email y password son requeridos')
-            );
-        }
-
-        if (password.length < 6) {
-            return res.status(HTTP_STATUS.BAD_REQUEST).json(
-                formatErrorResponse('La contraseña debe tener al menos 6 caracteres')
-            );
-        }
-
-        // Validar rol si se proporciona
-        if (rol) {
-            const rolesValidos = ['admin', 'user', 'viewer', 'editor'];
-            if (!rolesValidos.includes(rol)) {
-                return res.status(HTTP_STATUS.BAD_REQUEST).json(
-                    formatErrorResponse('Rol inválido. Roles válidos: ' + rolesValidos.join(', '))
-                );
-            }
+            return res.status(400).json({ 
+                message: 'Username, email y password son requeridos' 
+            });
         }
 
         // Verificar si el usuario ya existe
-        const usuarioExistente = await User.findOne({
-            $or: [
-                { username: username },
-                { email: email }
-            ]
+        const existingUser = await User.findOne({ 
+            $or: [{ email }, { username }] 
         });
 
-        if (usuarioExistente) {
-            if (usuarioExistente.username === username) {
-                return res.status(HTTP_STATUS.BAD_REQUEST).json(
-                    formatErrorResponse('El nombre de usuario ya está en uso')
-                );
-            }
-            if (usuarioExistente.email === email) {
-                return res.status(HTTP_STATUS.BAD_REQUEST).json(
-                    formatErrorResponse('El email ya está en uso')
-                );
-            }
+        if (existingUser) {
+            return res.status(409).json({ 
+                message: 'El usuario o email ya existe' 
+            });
         }
 
-        // Crear nuevo usuario
-        const nuevoUsuario = new User({
+        // Crear usuario
+        const hashedPassword = await bcrypt.hash(password, 10);
+        const newUser = new User({
             username,
             email,
-            password,
-            nombre: nombre || '',
-            apellido: apellido || '',
-            rol: rol || 'user',
-            departamento: departamento || '',
-            activo: true
+            password: hashedPassword,
+            nombre,
+            apellido,
+            rol
         });
 
-        await nuevoUsuario.save();
+        await newUser.save();
 
-        // Retornar usuario sin password
-        const usuarioCreado = await User.findById(nuevoUsuario._id).select('-password');
+        res.status(201).json({
+            message: 'Usuario creado exitosamente',
+            usuario: {
+                _id: newUser._id,
+                username: newUser.username,
+                email: newUser.email,
+                nombre: newUser.nombre,
+                apellido: newUser.apellido,
+                rol: newUser.rol,
+                createdAt: newUser.createdAt
+            }
+        });
 
-        res.status(HTTP_STATUS.CREATED).json(formatSuccessResponse({
-            id: usuarioCreado._id,
-            username: usuarioCreado.username,
-            email: usuarioCreado.email,
-            nombre: usuarioCreado.nombre,
-            apellido: usuarioCreado.apellido,
-            rol: usuarioCreado.rol,
-            departamento: usuarioCreado.departamento,
-            activo: usuarioCreado.activo,
-            createdAt: usuarioCreado.createdAt
-        }, 'Usuario creado exitosamente'));
-
-    } catch (err) {
-        console.error('Error al crear usuario:', err);
-
-        if (err.code === 11000) {
-            return res.status(HTTP_STATUS.BAD_REQUEST).json(
-                formatErrorResponse('El username o email ya está en uso')
-            );
-        }
-
-        res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json(
-            formatErrorResponse('Error al crear usuario')
-        );
+    } catch (error) {
+        console.error('Error al crear usuario:', error);
+        res.status(500).json({ 
+            message: 'Error interno del servidor', 
+            error: error.message 
+        });
     }
 };
 
