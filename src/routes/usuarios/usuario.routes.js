@@ -20,6 +20,6 @@ router.put('/change-password', verificarToken, userController.changePassword);
 router.put('/:id/rol', verificarToken, requireAdmin, userController.updateUserRole);
 router.delete('/:id', verificarToken, requireAdmin, userController.deleteUser);
 router.get('/', verificarToken, requireAdmin, userController.getAllUsers);
-router.post('/', verificarToken, requireAdmin, userController.createUser);
+router.post('/', verificarToken, userController.createUser);
 
 module.exports = router;
