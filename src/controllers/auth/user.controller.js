@@ -149,7 +149,7 @@ const getAllUsers = async (req, res) => {
         console.log('📋 getAllUsers ejecutándose');
         console.log('📋 req.user:', req.user);
         console.log('📋 req.query:', req.query);
-
+        
         const { limit = 50, offset = 0, rol, activo } = req.query;
 
         let query = {};
@@ -227,7 +227,7 @@ const updateUserRole = async (req, res) => {
         console.log('🔄 updateUserRole ejecutándose');
         console.log('🔄 req.params:', req.params);
         console.log('🔄 req.body:', req.body);
-
+        
         const { id } = req.params;
         const { rol } = req.body;
 
@@ -288,7 +288,10 @@ const createUser = async (req, res) => {
         console.log('👤 createUser ejecutándose');
         console.log('👤 req.body:', req.body);
 
-        const { username, email, password, nombre, apellido, rol = 'usuario' } = req.body;
+        const { username, email, password, nombre, apellido, rol = 'user' } = req.body;
+
+        // Convertir 'usuario' a 'user' para compatibilidad
+        const normalizedRol = rol === 'usuario' ? 'user' : rol;
 
         // Validaciones básicas
         if (!username || !email || !password) {
@@ -316,7 +319,7 @@ const createUser = async (req, res) => {
             password: hashedPassword,
             nombre,
             apellido,
-            rol
+            rol: normalizedRol
         });
 
         await newUser.save();
