@@ -8,22 +8,27 @@ const { HTTP_STATUS } = require('../../utils/constants');
  */
 const login = async (req, res) => {
     try {
+        console.log('🔐 Login intento - req.body:', req.body);
         const { username, password } = req.body;
 
         // Validar datos de entrada
         if (!username || !password) {
+            console.log('❌ Datos faltantes - username:', username, 'password:', password ? '***' : 'undefined');
             return res.status(HTTP_STATUS.BAD_REQUEST).json(
                 formatErrorResponse('Username y password son requeridos')
             );
         }
 
         // Buscar usuario
+        console.log('🔍 Buscando usuario:', username);
         const usuario = await User.findOne({ username });
         if (!usuario) {
+            console.log('❌ Usuario no encontrado:', username);
             return res.status(HTTP_STATUS.UNAUTHORIZED).json(
                 formatErrorResponse('Usuario no encontrado')
             );
         }
+        console.log('✅ Usuario encontrado:', usuario.username, 'activo:', usuario.activo);
 
         // Verificar si el usuario está activo
         if (!usuario.activo) {
@@ -33,12 +38,15 @@ const login = async (req, res) => {
         }
 
         // Verificar contraseña
+        console.log('🔐 Verificando contraseña...');
         const valido = await usuario.compararPassword(password);
         if (!valido) {
+            console.log('❌ Contraseña incorrecta para usuario:', username);
             return res.status(HTTP_STATUS.UNAUTHORIZED).json(
                 formatErrorResponse('Contraseña incorrecta')
             );
         }
+        console.log('✅ Contraseña correcta para usuario:', username);
 
         // Actualizar último acceso
         usuario.ultimoAcceso = new Date();
