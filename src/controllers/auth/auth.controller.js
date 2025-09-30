@@ -9,6 +9,8 @@ const { HTTP_STATUS } = require('../../utils/constants');
 const login = async (req, res) => {
     try {
         console.log('🔐 Login intento - req.body:', req.body);
+        console.log('🔐 Headers recibidos:', req.headers);
+        console.log('🔐 Content-Type:', req.headers['content-type']);
         const { username, password } = req.body;
 
         // Validar datos de entrada
