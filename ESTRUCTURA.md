@@ -181,3 +181,4 @@ npm start
 La reorganización mantiene la funcionalidad existente mientras proporciona una base sólida para futuras mejoras y expansiones del sistema.
 
 
+

@@ -149,7 +149,7 @@ const getAllUsers = async (req, res) => {
         console.log('📋 getAllUsers ejecutándose');
         console.log('📋 req.user:', req.user);
         console.log('📋 req.query:', req.query);
-        
+
         const { limit = 50, offset = 0, rol, activo } = req.query;
 
         let query = {};
@@ -227,7 +227,7 @@ const updateUserRole = async (req, res) => {
         console.log('🔄 updateUserRole ejecutándose');
         console.log('🔄 req.params:', req.params);
         console.log('🔄 req.body:', req.body);
-        
+
         const { id } = req.params;
         const { rol } = req.body;
 
@@ -238,7 +238,8 @@ const updateUserRole = async (req, res) => {
         }
 
         // Validar que el rol sea válido
-        const rolesValidos = ['admin', 'user', 'viewer', 'editor'];
+        const { USER_ROLES } = require('../../utils/constants');
+        const rolesValidos = Object.values(USER_ROLES);
         if (!rolesValidos.includes(rol)) {
             return res.status(HTTP_STATUS.BAD_REQUEST).json(
                 formatErrorResponse('Rol inválido. Roles válidos: ' + rolesValidos.join(', '))
@@ -288,26 +289,32 @@ const createUser = async (req, res) => {
         console.log('👤 createUser ejecutándose');
         console.log('👤 req.body:', req.body);
 
-        const { username, email, password, nombre, apellido, rol = 'user' } = req.body;
+        const { username, email, password, nombre, apellido, rol = 'usuario' } = req.body;
 
-        // Convertir 'usuario' a 'user' para compatibilidad
-        const normalizedRol = rol === 'usuario' ? 'user' : rol;
+        // Validar que el rol sea válido
+        const { USER_ROLES } = require('../../utils/constants');
+        const rolesValidos = Object.values(USER_ROLES);
+        if (!rolesValidos.includes(rol)) {
+            return res.status(400).json({
+                message: 'Rol inválido. Roles válidos: ' + rolesValidos.join(', ')
+            });
+        }
 
         // Validaciones básicas
         if (!username || !email || !password) {
-            return res.status(400).json({ 
-                message: 'Username, email y password son requeridos' 
+            return res.status(400).json({
+                message: 'Username, email y password son requeridos'
             });
         }
 
         // Verificar si el usuario ya existe
-        const existingUser = await User.findOne({ 
-            $or: [{ email }, { username }] 
+        const existingUser = await User.findOne({
+            $or: [{ email }, { username }]
         });
 
         if (existingUser) {
-            return res.status(409).json({ 
-                message: 'El usuario o email ya existe' 
+            return res.status(409).json({
+                message: 'El usuario o email ya existe'
             });
         }
 
@@ -339,9 +346,9 @@ const createUser = async (req, res) => {
 
     } catch (error) {
         console.error('Error al crear usuario:', error);
-        res.status(500).json({ 
-            message: 'Error interno del servidor', 
-            error: error.message 
+        res.status(500).json({
+            message: 'Error interno del servidor',
+            error: error.message
         });
     }
 };
