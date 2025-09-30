@@ -318,12 +318,11 @@ const createUser = async (req, res) => {
             });
         }
 
-        // Crear usuario
-        const hashedPassword = await bcrypt.hash(password, 10);
+        // Crear usuario (el modelo se encarga del hashing automáticamente)
         const newUser = new User({
             username,
             email,
-            password: hashedPassword,
+            password,
             nombre,
             apellido,
             rol
