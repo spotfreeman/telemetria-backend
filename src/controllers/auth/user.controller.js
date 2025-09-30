@@ -326,7 +326,7 @@ const createUser = async (req, res) => {
             password: hashedPassword,
             nombre,
             apellido,
-            rol: normalizedRol
+            rol
         });
 
         await newUser.save();
